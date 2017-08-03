@@ -19,13 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Input.cpp" />
+    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\MainComponent.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Window.cpp" />
+    <ClCompile Include="src\Timing.cpp" />
+    <ClCompile Include="src\Util.cpp" />
+    <ClCompile Include="src\math\Vector2f.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Input.h" />
+    <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\MainComponent.h" />
     <ClInclude Include="src\Window.h" />
+    <ClInclude Include="src\Timing.h" />
+    <ClInclude Include="src\Util.h" />
+    <ClInclude Include="src\math\Vector2f.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SDL2.dll" />

@@ -3,7 +3,8 @@
 Window::Window(int width, int height, std::string title) :
 	_width(width),
 	_height(height),
-	_title(title)
+	_title(title),
+	_input(this)
 {
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -47,19 +48,67 @@ Window::Window(int width, int height, std::string title) :
 		return;
 	}
 #endif
+
+	SDL_GL_SetSwapInterval(0);
+
 }
 
 void Window::update()
 {
-	while (!_isCloseRequested)
+	for (int i = 0; i < Input::NUM_MOUSEBUTTONS; i++)
 	{
-		SDL_WaitEvent(&_events);
-		if (_events.window.event == SDL_WINDOWEVENT_CLOSE)
+		_input.setMouseDown(i, false);
+		_input.setMouseUp(i, false);
+	}
+
+	for (int i = 0; i < Input::NUM_KEYS; i++)
+	{
+		_input.setKeyDown(i, false);
+		_input.setKeyUp(i, false);
+	}
+
+	SDL_Event e;
+	while (SDL_PollEvent(&e))
+	{
+		if (e.type == SDL_QUIT)
+		{
 			_isCloseRequested = true;
+		}
 
-		glClear(GL_COLOR_BUFFER_BIT);
+		if (e.type == SDL_MOUSEMOTION)
+		{
+			_input.setMouseX(e.motion.x);
+			_input.setMouseY(e.motion.y);
+		}
 
-		SDL_GL_SwapWindow(_window);
+		if (e.type == SDL_KEYDOWN)
+		{
+			int value = e.key.keysym.scancode;
+
+			_input.setKey(value, true);
+			_input.setKeyDown(value, true);
+		}
+		if (e.type == SDL_KEYUP)
+		{
+			int value = e.key.keysym.scancode;
+
+			_input.setKey(value, false);
+			_input.setKeyUp(value, true);
+		}
+		if (e.type == SDL_MOUSEBUTTONDOWN)
+		{
+			int value = e.button.button;
+
+			_input.setMouse(value, true);
+			_input.setMouseDown(value, true);
+		}
+		if (e.type == SDL_MOUSEBUTTONUP)
+		{
+			int value = e.button.button;
+
+			_input.setMouse(value, false);
+			_input.setMouseUp(value, true);
+		}
 	}
 }
 

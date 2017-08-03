@@ -9,6 +9,8 @@
 #include <GL/GL.h>
 #endif // _WIN32
 
+#include "Input.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -20,6 +22,11 @@
 class Window
 {
 public:
+	SDL_Window* _window;
+	SDL_GLContext _glContext;
+	SDL_Event _events;
+	Input _input;
+
 	Window(int width, int height, std::string title);
 	~Window();
 	void update();
@@ -33,9 +40,6 @@ public:
 
 
 private:
-	SDL_Window* _window;
-	SDL_GLContext _glContext;
-	SDL_Event _events;
 	bool _isCloseRequested;
 	int _width;
 	int _height;
